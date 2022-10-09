@@ -15,11 +15,13 @@ class SeriesListCoordinator: Coordinator {
     unowned let navigationController: UINavigationController
     
     required init(navigationController: UINavigationController) {
+        navigationController.navigationBar.prefersLargeTitles = true
         self.navigationController = navigationController
     }
     
     func start() {
         let seriesListVC : ViewController = ViewController()
+        seriesListVC.title = "Series Gallery"
         self.navigationController.viewControllers = [seriesListVC]
     }
     
