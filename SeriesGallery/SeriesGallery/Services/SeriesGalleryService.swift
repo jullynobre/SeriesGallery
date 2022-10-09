@@ -26,7 +26,7 @@ final class SeriesGalleryService {
         }
     }
     
-    static func searchSeries(query: String, completion: @escaping (Result<[Show], Error>) -> Void) {
+    static func searchSeries(query: String, completion: @escaping (Result<[Serie], Error>) -> Void) {
         
         guard let url = URL(string: "\(Endpoint.search.url)?q=\(query)") else {
             //Error
@@ -49,7 +49,10 @@ final class SeriesGalleryService {
             }
 
             do {
-                let series = try JSONDecoder().decode([Show].self, from: data)
+                let shows = try JSONDecoder().decode([Show].self, from: data)
+                let series = shows.map({ show in
+                    return show.show
+                })
                 completion(.success(series))
             } catch let error {
                 print(#function, "🧨 Request: \(request)\nError: \(error)")

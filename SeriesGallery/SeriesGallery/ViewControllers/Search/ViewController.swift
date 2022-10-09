@@ -7,13 +7,18 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    
-    private lazy var searchBar: UISearchBar = {
-        let search = UISearchBar()
-        search.translatesAutoresizingMaskIntoConstraints = false
-        return search
-    }()
+
+class AppController: UIViewController {
+    public init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class SearchViewController: AppController {
     
     private lazy var resultsTable: UITableView = {
         let table = UITableView()
@@ -23,21 +28,37 @@ class ViewController: UIViewController {
         return table
     }()
     
+    let searchController = UISearchController()
+    
+    private let viewModel: SearchViewModel
+    
+    // MARK: - Inits
+    
+    required init(viewModel: SearchViewModel) {
+        self.viewModel = viewModel
+        super.init()
+        self.viewModel.delegate = self
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - ViewSetup
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
+        
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
     }
     
     func setupLayout() {
-        self.view.addSubview(searchBar)
         self.view.addSubview(resultsTable)
         
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            
-            resultsTable.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            resultsTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             resultsTable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             resultsTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             resultsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -46,13 +67,54 @@ class ViewController: UIViewController {
 
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+
+// MARK: - TableView
+
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        return viewModel.getNumberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = UITableViewCell()
+        cell.textLabel?.text = viewModel.getInfo(for: indexPath)
+        return cell
+    }
+    
+}
+
+
+// MARK: - SearchBar
+
+extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        viewModel.searchSeries(query: searchBar.text ?? "")
+    }
+}
+
+
+extension SearchViewController: RequestDelegate {
+    func didUpdate(with state: ViewState) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            switch state {
+            case .idle:
+                break
+            case .loading:
+                //start loading animation
+                print("loading")
+            case .success:
+                self.resultsTable.reloadData()
+                //stop loading
+            case .error(let error):
+                //stop loading and show error
+                print(error)
+                //relaod data (initial state)
+            }
+        }
     }
     
     

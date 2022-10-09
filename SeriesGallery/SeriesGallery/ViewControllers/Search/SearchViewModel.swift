@@ -34,24 +34,25 @@ extension SearchViewModel {
         return serie.name
     }
     
+    func getNumberOfRows() -> Int {
+        return self.series.count
+    }
 }
 
 // MARK: Service
 
 extension SearchViewModel {
     
-    func loadData() {
+    func searchSeries(query: String) {
         self.state = .loading
         
-        SeriesGalleryService.searchSeries(query: "") { result in
+        SeriesGalleryService.searchSeries(query: query) { result in
             switch result {
             case let .failure(error):
                 self.series = []
                 self.state = .error(error)
-            case let .success(showArray):
-                self.series = showArray.map({ show in
-                    return show.show
-                })
+            case let .success(series):
+                self.series = series
                 self.state = .success
             }
         }

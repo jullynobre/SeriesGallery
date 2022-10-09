@@ -20,7 +20,8 @@ class SeriesListCoordinator: Coordinator {
     }
     
     func start() {
-        let seriesListVC : ViewController = ViewController()
+        let viewModel = SearchViewModel()
+        let seriesListVC : SearchViewController = SearchViewController(viewModel: viewModel)
         seriesListVC.title = "Series Gallery"
         self.navigationController.viewControllers = [seriesListVC]
     }
