@@ -27,9 +27,9 @@ final class SeriesGalleryService {
     }
     
     static func searchSeries(query: String, completion: @escaping (Result<[Serie], Error>) -> Void) {
-        
-        guard let url = URL(string: "\(Endpoint.search.url)?q=\(query)") else {
-            //Error
+        let formattedQuery = String(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
+        guard let url = URL(string: "\(Endpoint.search.url)?q=\(formattedQuery)") else {
+            //completion(.failure(error))
             return
         }
 
