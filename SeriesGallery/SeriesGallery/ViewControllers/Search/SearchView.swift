@@ -7,17 +7,6 @@
 
 import UIKit
 
-
-class AppController: UIViewController {
-    public init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 class SearchViewController: AppController {
     
     private lazy var resultsTable: UITableView = {
