@@ -29,9 +29,9 @@ final class SearchViewModel {
 
 extension SearchViewModel {
     
-    func getInfo(for indexPath: IndexPath) -> String {
+    func getInfo(for indexPath: IndexPath) -> (name: String, image: UIImage?) {
         let serie = series[indexPath.row]
-        return serie.name
+        return (serie.name, serie.image)
     }
     
     func getNumberOfRows() -> Int {

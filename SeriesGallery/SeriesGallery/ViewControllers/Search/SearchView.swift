@@ -13,6 +13,7 @@ class SearchViewController: AppController {
         let table = UITableView()
         table.delegate = self
         table.dataSource = self
+        table.rowHeight = 80
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
@@ -20,6 +21,7 @@ class SearchViewController: AppController {
     let searchController = UISearchController()
     
     private let viewModel: SearchViewModel
+    private let cellIndentifier = "SearchResultCell"
     
     // MARK: - Inits
     
@@ -41,6 +43,8 @@ class SearchViewController: AppController {
         
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
+        
+        resultsTable.register(SearchResultCell.self, forCellReuseIdentifier: cellIndentifier)
     }
     
     func setupLayout() {
@@ -66,8 +70,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = viewModel.getInfo(for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIndentifier, for: indexPath) as? SearchResultCell
+        else { return UITableViewCell() }
+        
+        let result = viewModel.getInfo(for: indexPath)
+        cell.serieNameLabel.text = result.name
+        cell.serieImage.image = result.image
+        
         return cell
     }
     
