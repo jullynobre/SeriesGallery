@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class SeriesGalleryService {
+class SeriesGalleryService {
     private static let baseURL = "https://api.tvmaze.com/"
 
     private enum Endpoint {
