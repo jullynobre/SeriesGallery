@@ -27,6 +27,7 @@
 		F066778828F3406800B4B398 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F066778728F3406800B4B398 /* SearchResultCell.swift */; };
 		F066778B28F3408300B4B398 /* EpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F066778A28F3408300B4B398 /* EpisodeView.swift */; };
 		F066778D28F3408E00B4B398 /* EpisodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F066778C28F3408E00B4B398 /* EpisodeViewModel.swift */; };
+		F066778F28F34C7000B4B398 /* SerieViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F066778E28F34C7000B4B398 /* SerieViewCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		F066778728F3406800B4B398 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		F066778A28F3408300B4B398 /* EpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeView.swift; sourceTree = "<group>"; };
 		F066778C28F3408E00B4B398 /* EpisodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewModel.swift; sourceTree = "<group>"; };
+		F066778E28F34C7000B4B398 /* SerieViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerieViewCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 			children = (
 				F066776D28F1C65D00B4B398 /* SeriesListCoordinator.swift */,
 				F066776F28F1C6F700B4B398 /* Coordinator.swift */,
+				F066778E28F34C7000B4B398 /* SerieViewCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				F066773D28F1C16300B4B398 /* AppDelegate.swift in Sources */,
 				F066777F28F2113400B4B398 /* SearchViewModel.swift in Sources */,
 				F066777728F1FC1B00B4B398 /* SerieModel.swift in Sources */,
+				F066778F28F34C7000B4B398 /* SerieViewCoordinator.swift in Sources */,
 				F066778B28F3408300B4B398 /* EpisodeView.swift in Sources */,
 				F066778D28F3408E00B4B398 /* EpisodeViewModel.swift in Sources */,
 				F066773F28F1C16300B4B398 /* SceneDelegate.swift in Sources */,

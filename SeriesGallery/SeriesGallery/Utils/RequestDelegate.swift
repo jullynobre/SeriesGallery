@@ -12,6 +12,7 @@ enum ViewState {
     case loading
     case success
     case error(Error)
+    case relaodRow(IndexPath)
 }
 
 protocol RequestDelegate: AnyObject {

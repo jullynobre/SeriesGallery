@@ -5,7 +5,7 @@
 //  Created by Jully Nobre da Silva on 08/10/22.
 //
 
-import Foundation
+import UIKit
 
 final class SearchViewModel {
     
@@ -17,7 +17,7 @@ final class SearchViewModel {
         }
     }
     
-    private var series: [Serie] = []
+    private var series: [SerieModel] = []
     
     init () {
         self.state = .idle
@@ -37,6 +37,8 @@ extension SearchViewModel {
     func getNumberOfRows() -> Int {
         return self.series.count
     }
+    
+    
 }
 
 // MARK: Service
@@ -54,6 +56,22 @@ extension SearchViewModel {
             case let .success(series):
                 self.series = series
                 self.state = .success
+                self.loadImages()
+            }
+        }
+    }
+    
+    private func loadImages() {
+        for i in 0..<series.count {
+            guard let imageURL = self.series[i].imageURL else { return }
+            SeriesGalleryService.downlaoadImage(url: imageURL) { result in
+                switch result {
+                case let .success(image):
+                    self.series[i].image = image
+                    self.state = .relaodRow(IndexPath(row: i, section: 0))
+                case let .failure(error):
+                    print(error)
+                }
             }
         }
     }

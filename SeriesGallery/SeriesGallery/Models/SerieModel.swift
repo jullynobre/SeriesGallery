@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Show: Codable {
     let show: Serie
@@ -16,10 +17,24 @@ struct Serie: Codable {
     let schedule: Schedule
     let genres: [String]
     let summary: String?
+    let image: Image?
 }
 
 struct Schedule: Codable {
     let time: String
     let days: [String]
-    
+}
+
+struct Image: Codable {
+    let medium: String
+    let original: String
+}
+
+struct SerieModel {
+    let name: String
+    let schedule: Schedule
+    let genres: [String]
+    let summary: String?
+    let imageURL: String?
+    var image: UIImage?
 }

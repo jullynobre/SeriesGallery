@@ -98,6 +98,8 @@ extension SearchViewController: RequestDelegate {
             case .success:
                 self.resultsTable.reloadData()
                 //stop loading
+            case .relaodRow(let indexPath):
+                self.resultsTable.reloadRows(at: [indexPath], with: .none)
             case .error(let error):
                 //stop loading and show error
                 print(error)
